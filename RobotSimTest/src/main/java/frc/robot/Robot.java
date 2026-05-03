@@ -1,13 +1,19 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 
 
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
 
   private RobotContainer m_robotContainer;
   private Command m_autonomousCommand;
@@ -17,7 +23,10 @@ public class Robot extends TimedRobot {
     // Start camera (optional)
     CameraServer.startAutomaticCapture();
 
-    
+    Logger.addDataReceiver(new WPILOGWriter());
+    Logger.addDataReceiver(new NT4Publisher());
+
+    Logger.start();
 
     // Create robot container (this sets up subsystems + commands)
     m_robotContainer = new RobotContainer();
